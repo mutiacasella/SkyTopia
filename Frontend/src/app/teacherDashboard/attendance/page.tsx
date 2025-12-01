@@ -102,7 +102,7 @@ export default function AttendancePage() {
             } else {
                 setMessage({ type: 'error', text: data.message || 'Terjadi kesalahan' });
             }
-        } catch (error) {
+        } catch {
             setMessage({ type: 'error', text: 'Terjadi kesalahan saat clock in' });
         } finally {
             setIsSubmittingIn(false);
@@ -288,7 +288,7 @@ export default function AttendancePage() {
                                                 'bg-yellow-100 text-yellow-800'
                                             }`}>
                                                 {record.clockIn.status === 'Present' ? 'Hadir' :
-                                                 record.clockIn.status === 'Absent' ? 'Tidak Hadir' : 'Izin'}
+                                                record.clockIn.status === 'Absent' ? 'Tidak Hadir' : 'Izin'}
                                             </span>
                                             {record.clockIn.timestamp && (
                                                 <span className="text-xs text-gray-500">
