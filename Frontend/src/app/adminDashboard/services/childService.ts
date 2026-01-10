@@ -219,3 +219,31 @@ export const removeScheduleFromChild = async (childId: string, scheduleId: strin
         throw error;
     }
 };
+
+/**
+ * Update child schedules (Admin only) - Update all schedules at once
+ */
+export const updateChildSchedules = async (childId: string, scheduleIds: string[]): Promise<Child> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/children/${childId}`, {
+            method: 'PUT',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ schedules: scheduleIds })
+        });
+
+        const data: ChildApiResponse = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Gagal mengupdate jadwal anak');
+        }
+
+        if (!data.child) {
+            throw new Error('Data anak tidak ditemukan dalam response');
+        }
+
+        return data.child;
+    } catch (error) {
+        console.error('Error updating child schedules:', error);
+        throw error;
+    }
+};

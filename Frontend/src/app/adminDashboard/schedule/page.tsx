@@ -376,7 +376,7 @@ export default function SchedulePage() {
           }
         />
         <div className="flex justify-center items-center py-8">
-          <FiLoader className="animate-spin h-8 w-8 text-brand-purple" />
+          <FiLoader className="animate-spin h-8 w-8 text-purple-400" />
         </div>
       </div>
     );
@@ -424,9 +424,9 @@ export default function SchedulePage() {
           <div className="flex justify-between items-center mb-4 gap-4 flex-wrap">
             <button
               onClick={previousWeek}
-              className="p-2 hover:bg-gray-100 rounded-lg transition"
+              className="p-2 hover:bg-purple-50 rounded-lg transition"
             >
-              <FiChevronLeft className="h-5 w-5 text-brand-purple" />
+              <FiChevronLeft className="h-5 w-5 text-purple-400" />
             </button>
             <div className="flex items-center gap-2 flex-1 justify-center">
               <h3 className="text-lg font-semibold text-gray-900 text-center">
@@ -459,14 +459,14 @@ export default function SchedulePage() {
                   const [year, month] = e.target.value.split('-');
                   setCurrentDate(new Date(parseInt(year), parseInt(month) - 1, 1));
                 }}
-                className="px-2 py-1 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                className="px-2 py-1 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
               />
             </div>
             <button
               onClick={nextWeek}
-              className="p-2 hover:bg-gray-100 rounded-lg transition"
+              className="p-2 hover:bg-purple-50 rounded-lg transition"
             >
-              <FiChevronRight className="h-5 w-5 text-brand-purple" />
+              <FiChevronRight className="h-5 w-5 text-purple-400" />
             </button>
           </div>
 
@@ -475,9 +475,9 @@ export default function SchedulePage() {
             {getDaysInWeek(currentDate).map((day, idx) => (
               <div key={idx} className="border border-gray-200 rounded-lg overflow-hidden min-h-96">
                 {/* Day Header */}
-                <div className="bg-gradient-to-r from-brand-purple to-purple-600 text-white p-3">
-                  <div className="text-sm font-semibold">{dayNames[day.getDay()]}</div>
-                  <div className="text-2xl font-bold">{day.getDate()}</div>
+                <div className="bg-gradient-to-br from-purple-100 via-purple-200 to-pink-100 p-3">
+                  <div className="text-sm font-semibold text-gray-700">{dayNames[day.getDay()]}</div>
+                  <div className="text-2xl font-bold text-gray-800">{day.getDate()}</div>
                 </div>
 
                 {/* Day Content */}
@@ -486,11 +486,11 @@ export default function SchedulePage() {
                     getSchedulesForDay(day).map((schedule) => (
                       <div
                         key={schedule._id}
-                        className="bg-white p-2 rounded border-l-4 border-brand-purple hover:shadow-md transition group"
+                        className="bg-white p-2 rounded border-l-4 border-purple-300 hover:shadow-md transition group"
                       >
                         <div className="flex justify-between items-start gap-1">
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-semibold text-brand-purple truncate">
+                            <div className="text-xs font-semibold text-purple-400 truncate">
                               {schedule.startTime} - {schedule.endTime}
                             </div>
                             <div className="text-xs font-medium text-gray-900 truncate">
@@ -539,7 +539,7 @@ export default function SchedulePage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-brand-purple">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 {editingItem ? 'Edit' : 'Tambah'} Jadwal
               </h2>
               <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
@@ -568,7 +568,7 @@ export default function SchedulePage() {
                     setFormData({ ...formData, date: newDate, day: dayName });
                   }}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                 />
               </div>
 
@@ -581,7 +581,7 @@ export default function SchedulePage() {
                   value={formData.title || ''}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                 />
               </div>
 
@@ -593,7 +593,7 @@ export default function SchedulePage() {
                   value={formData.curriculum || ''}
                   onChange={(e) => setFormData({ ...formData, curriculum: e.target.value })}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                 >
                   <option value="">Pilih Kurikulum</option>
                   {curriculums.map((curriculum) => (
@@ -614,7 +614,7 @@ export default function SchedulePage() {
                     value={formData.startTime || ''}
                     onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                   />
                 </div>
 
@@ -627,7 +627,7 @@ export default function SchedulePage() {
                     value={formData.endTime || ''}
                     onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                   />
                 </div>
               </div>
@@ -640,7 +640,7 @@ export default function SchedulePage() {
                   value={formData.teacher || ''}
                   onChange={(e) => setFormData({ ...formData, teacher: e.target.value })}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-purple"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-300"
                 >
                   <option value="">Pilih Guru</option>
                   {teachers.map((teacher) => (
@@ -662,7 +662,7 @@ export default function SchedulePage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-4 py-2 bg-brand-purple text-white rounded-md hover:bg-opacity-90 disabled:opacity-50 flex items-center space-x-2"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-300 to-pink-300 text-white rounded-md hover:from-purple-400 hover:to-pink-400 disabled:opacity-50 flex items-center space-x-2 shadow-md transition-all"
                 >
                   {saving && <FiLoader className="animate-spin h-4 w-4" />}
                   <span>{saving ? 'Menyimpan...' : 'Simpan'}</span>

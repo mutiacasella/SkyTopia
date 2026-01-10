@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { FiPlus, FiEdit, FiTrash2, FiSearch, FiUser, FiArrowLeft } from 'react-icons/fi';
+import { FiPlus, FiEdit, FiTrash2, FiSearch, FiUser, FiArrowLeft, FiCalendar } from 'react-icons/fi';
 import { Child, ChildFormData } from '../types/child.types';
-import { getAllChildren, createChild, updateChild, deleteChild } from '../services/childService';
+import { getAllChildren, createChild, updateChild, deleteChild, updateChildSchedules } from '../services/childService';
 import ChildFormModal from '../components/ChildFormModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
+import AssignScheduleModal from '../components/AssignScheduleModal';
 import PageHeader from '../../../components/PageHeader';
 
 export default function ChildrenPage() {
@@ -18,6 +19,7 @@ export default function ChildrenPage() {
 
     const [isFormModalOpen, setIsFormModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
     const [selectedChild, setSelectedChild] = useState<Child | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -70,6 +72,28 @@ export default function ChildrenPage() {
     const handleDeleteChild = (child: Child) => {
         setSelectedChild(child);
         setIsDeleteModalOpen(true);
+    };
+
+    const handleAssignSchedule = (child: Child) => {
+        setSelectedChild(child);
+        setIsScheduleModalOpen(true);
+    };
+
+    const handleScheduleAssign = async (scheduleIds: string[]) => {
+        if (!selectedChild) return;
+
+        setIsSubmitting(true);
+        try {
+            await updateChildSchedules(selectedChild._id, scheduleIds);
+            setIsScheduleModalOpen(false);
+            setSelectedChild(null);
+            await fetchChildren();
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'Gagal mengupdate jadwal anak';
+            alert(errorMessage);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleFormSubmit = async (formData: ChildFormData) => {
@@ -274,8 +298,14 @@ export default function ChildrenPage() {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {child.parent_id.phone || '-'}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {child.schedules.length} jadwal
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <button
+                                                onClick={() => handleAssignSchedule(child)}
+                                                className="text-sm text-brand-purple hover:text-purple-700 font-medium flex items-center space-x-1"
+                                            >
+                                                <FiCalendar className="h-4 w-4" />
+                                                <span>{child.schedules.length} jadwal</span>
+                                            </button>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                             <div className="flex justify-center space-x-2">
@@ -364,6 +394,19 @@ export default function ChildrenPage() {
                     setSelectedChild(null);
                 }}
                 isDeleting={isSubmitting}
+            />
+
+            <AssignScheduleModal
+                isOpen={isScheduleModalOpen}
+                childName={selectedChild?.name || ''}
+                childId={selectedChild?._id || ''}
+                assignedScheduleIds={selectedChild?.schedules.map(s => s._id) || []}
+                onClose={() => {
+                    setIsScheduleModalOpen(false);
+                    setSelectedChild(null);
+                }}
+                onAssign={handleScheduleAssign}
+                isSubmitting={isSubmitting}
             />
         </div>
     );

@@ -451,30 +451,26 @@ export default function DashboardAdminPage() {
                         href="/adminDashboard/children"
                         icon={FiUsers}
                         description="Kelola data anak didik"
+                        variant="default"
                     />
                     <DashboardButton
                         title="Manajemen Pengguna"
                         href="/adminDashboard/users"
                         icon={FiUsers}
                         description="Kelola akun Guru & Orang Tua"
+                        variant="default"
                     />
                     <DashboardButton
                         title="Manajemen Guru"
                         href="/adminDashboard/teaher-management"
                         icon={FiDatabase}
                         description="Database dan Absensi Guru"
+                        variant="default"
                     />
                 </DashboardCard>
 
                 {/* 2. Inventory & Facilities */}
                 <DashboardCard title="Inventaris & Fasilitas">
-                    <DashboardButton
-                        title="Permintaan Inventaris"
-                        href="/adminDashboard/requests"
-                        icon={FiPackage}
-                        description="Setujui permintaan guru"
-                        variant="pink"
-                    />
                     <DashboardButton
                         title="Laporan Inventaris"
                         href="/adminDashboard/inventory-reports"
